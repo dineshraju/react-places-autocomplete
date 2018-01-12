@@ -84,15 +84,15 @@ class PlacesAutocomplete extends Component {
     this.setState({ autocompleteItems: [] })
   }
 
-  selectAddress(address, placeId) {
+  selectAddress(placeItem) {
     this.clearSuggestions()
-    this.handleSelect(address, placeId)
+    this.handleSelect(placeItem)
   }
 
-  handleSelect(address, placeId) {
+  handleSelect(placeItem) {
     this.props.onSelect
-      ? this.props.onSelect(address, placeId)
-      : this.props.inputProps.onChange(address)
+      ? this.props.onSelect(placeItem)
+      : this.props.inputProps.onChange(placeItem)
   }
 
   getActiveItem() {
@@ -112,7 +112,7 @@ class PlacesAutocomplete extends Component {
     if (activeItem === undefined) {
       this.handleEnterKeyWithoutActiveItem()
     } else {
-      this.selectAddress(activeItem.suggestion, activeItem.placeId)
+      this.selectAddress(activeItem)
     }
   }
 
@@ -284,9 +284,9 @@ class PlacesAutocomplete extends Component {
               <div
                 key={p.placeId}
                 onMouseOver={() => this.setActiveItemAtIndex(p.index)}
-                onMouseDown={() => this.selectAddress(p.suggestion, p.placeId)}
+                onMouseDown={() => this.selectAddress(p)}
                 onTouchStart={() => this.setActiveItemAtIndex(p.index)}
-                onTouchEnd={() => this.selectAddress(p.suggestion, p.placeId)}
+                onTouchEnd={() => this.selectAddress(p)}
                 style={
                   p.active
                     ? this.inlineStyleFor(
